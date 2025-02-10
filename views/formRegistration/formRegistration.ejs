@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Future Meets Past | Time Travel Fest</title>
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+.schedule-grid {
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.event-card {
+    background: rgba(255,255,255,0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    text-align: center;
+}
+
+.event-card:hover {
+    transform: scale(1.02);
+}
+
+.schedule-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+</style>
+</head>
+
+<body class="bg-dark text-white">
+
+<!-- Era Selection Buttons -->
+<div class="container text-center mt-5">
+    <h1>Choose Your Time Period</h1>
+    <div class="d-flex justify-content-center gap-3 mt-3">
+        <button class="btn btn-primary era-btn" data-era="prehistoric">Prehistoric</button>
+        <button class="btn btn-warning era-btn" data-era="medieval">Medieval</button>
+        <button class="btn btn-danger era-btn" data-era="future">Future</button>
+    </div>
+</div>
+
+<!-- Events Section -->
+<section id="eventsSection" class="container mt-5 d-none">
+    <div class="schedule-controls">
+        <button id="prevPeriod" class="btn btn-outline-light">◀ Previous</button>
+        <h2 id="currentPeriod" class="text-center"></h2>
+        <button id="nextPeriod" class="btn btn-outline-light">▶ Next</button>
+    </div>
+    <div id="scheduleContainer" class="row g-3"></div>
+</section>
+
+<!-- Bootstrap Modal for Registration -->
+<div class="modal fade" id="registrationModal" tabindex="-1" aria-labelledby="registrationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registrationModalLabel">Register for <span id="eventTitle"></span></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="registrationForm">
+                    <div class="mb-3">
+                        <input type="text" name="fullName" class="form-control" placeholder="Full Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" name="email" class="form-control" placeholder="Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="number" name="tickets" class="form-control" min="1" max="5" placeholder="Number of Tickets" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Complete Registration</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS & Dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+const eraEvents = {
+    prehistoric: [
+        { id: 1, name: "Dinosaur Safari", date: "2023-11-15", time: "10:00 AM", location: "Jurassic Valley", capacity: 50, registered: 0 }
+    ],
+    medieval: [
+        { id: 2, name: "Knight Tournament", date: "2023-11-16", time: "2:00 PM", location: "Royal Arena", capacity: 100, registered: 0 }
+    ],
+    future: [
+        { id: 3, name: "Mars Colony Tour", date: "2023-11-17", time: "9:00 AM", location: "Spaceport Alpha", capacity: 30, registered: 0 }
+    ]
+};
+
+let currentEra = null;
+let currentPeriod = 0;
+const eventsSection = document.getElementById('eventsSection');
+const scheduleContainer = document.getElementById('scheduleContainer');
+const periodDisplay = document.getElementById('currentPeriod');
+const modalElement = document.getElementById('registrationModal');
+const registrationModal = new bootstrap.Modal(modalElement);
+
+// Handle era selection
+document.querySelectorAll('.era-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        startTimeMachineAnimation(button.getAttribute('data-era'));
+    });
+});
+
+function startTimeMachineAnimation(era) {
+    setTimeout(() => {
+        currentEra = era;
+        showSchedule();
+        eventsSection.classList.remove('d-none');
+    }, 500);
+}
+
+function showSchedule() {
+    scheduleContainer.innerHTML = '';
+    const events = eraEvents[currentEra];
+
+    events.forEach(event => {
+        const eventCard = document.createElement('div');
+        eventCard.className = 'col-md-4';
+        eventCard.innerHTML = `
+            <div class="event-card p-3 border rounded">
+                <h4>${event.name}</h4>
+                <p>📅 ${event.date} ⏰ ${event.time}</p>
+                <p>📍 ${event.location}</p>
+                <p>Spaces left: <strong>${event.capacity - event.registered}</strong></p>
+                <button class="btn btn-${event.registered >= event.capacity ? 'danger' : 'success'} w-100 register-btn" 
+                ${event.registered >= event.capacity ? 'disabled' : ''}>
+                ${event.registered >= event.capacity ? 'Sold Out' : 'Register'}
+                </button>
+            </div>
+        `;
+        eventCard.querySelector('.register-btn').addEventListener('click', () => showRegistration(event));
+        scheduleContainer.appendChild(eventCard);
+    });
+
+    updatePeriodDisplay();
+}
+
+function showRegistration(event) {
+    document.getElementById('eventTitle').textContent = event.name;
+    registrationModal.show();
+
+    const form = document.getElementById('registrationForm');
+    form.onsubmit = (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const tickets = parseInt(formData.get('tickets'));
+        if (tickets > (event.capacity - event.registered)) {
+            alert('Not enough available tickets!');
+            return;
+        }
+
+        event.registered += tickets;
+        showSchedule();
+        registrationModal.hide();
+        form.reset();
+        alert('Registration successful!');
+    };
+}
+
+document.getElementById('prevPeriod').addEventListener('click', () => {
+    currentPeriod = Math.max(0, currentPeriod - 1);
+    showSchedule();
+});
+
+document.getElementById('nextPeriod').addEventListener('click', () => {
+    currentPeriod += 1;
+    showSchedule();
+});
+
+function updatePeriodDisplay() {
+    const periodNames = {
+        prehistoric: ['Triassic', 'Jurassic', 'Cretaceous'],
+        medieval: ['Early Middle Ages', 'High Middle Ages', 'Late Middle Ages'],
+        future: ['Near Future', 'Mid Future', 'Far Future']
+    };
+    periodDisplay.textContent = periodNames[currentEra][currentPeriod % 3];
+}
+</script>
+
+</body>
+</html>

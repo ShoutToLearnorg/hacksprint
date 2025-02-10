@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Event Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+        .legend {
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map
+        const map = L.map('map').setView([31.2558, 75.7056], 17); // Higher zoom level for better details
+
+        // Use a better tile layer with more labels
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+
+        // Sample event data
+        const events = [
+            {
+                name: "HackSprit Web-a-thon",
+                location: [31.254378025724733, 75.70561578399119],
+                time: "Feb 10, 6:30 PM",
+                description: "12hrs HackSprit web-a-thon in collaboration with Upgrade",
+                type: "academic"
+            },
+            {
+                name: "Cultural Event Punjab and Tazikstan",
+                location: [31.25214312857165, 75.7041158892198],
+                time: "Feb 20, 10:00 AM",
+                description: "A cultural perfromance for taziksatn and Punab music performance",
+                type: "cultural"
+            },
+            {
+                name: "Annual Athelet Meet",
+                location: [31.25619063904764, 75.71052814485859],
+                time: "Feb 14-15, 10:00 AM",
+                description: "A health Atheletic meet for all students",
+                type: "Sports"
+            }
+        ];
+
+        // Icons for different event types
+        const iconColors = {
+            academic: 'blue',
+            cultural: 'green',
+            career: 'orange'
+        };
+
+        // Function to create markers and popups
+        events.forEach(event => {
+            const marker = L.marker(event.location, {
+                icon: L.icon({
+                    iconUrl: `/images/location.png`,
+                    iconSize: [35, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34]
+                })
+            }).addTo(map);
+
+            // Detect user location for dynamic directions
+            navigator.geolocation.getCurrentPosition(position => {
+                const userLat = position.coords.latitude;
+                const userLng = position.coords.longitude;
+
+                marker.bindPopup(`
+                    <h3>${event.name}</h3>
+                    <p><strong>Time:</strong> ${event.time}</p>
+                    <p><strong>Description:</strong> ${event.description}</p>
+                    <a href="https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${event.location[0]},${event.location[1]}"
+                       target="_blank" style="color: blue; text-decoration: underline;">
+                       Get Directions
+                    </a>
+                `);
+            }, () => {
+                // If user location is blocked, show directions without origin
+                marker.bindPopup(`
+                    <h3>${event.name}</h3>
+                    <p><strong>Time:</strong> ${event.time}</p>
+                    <p><strong>Description:</strong> ${event.description}</p>
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=${event.location[0]},${event.location[1]}"
+                       target="_blank" style="color: blue; text-decoration: underline;">
+                       Get Directions
+                    </a>
+                `);
+            });
+        });
+
+        // Add legend for event types
+        const legend = L.control({ position: 'bottomright' });
+        legend.onAdd = function(map) {
+            const div = L.DomUtil.create('div', 'legend');
+            div.innerHTML = `
+                <h2>Event Types</h2>
+                <h3>Click the Red pin location to get Direction and Event details </h3>
+            `;
+            return div;
+        };
+        legend.addTo(map);
+    </script>
+</body>
+</html>

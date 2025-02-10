@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Future Meets Past | Time Travel Fest</title>
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kavoon&family=Stalinist+One&display=swap" rel="stylesheet">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="/">Time Travel Fest</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/eventLocation">Happening</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about">Gallery</a>
+        </li>
+        <li class="nav-item dropdown">
+          
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/prehistoric">Prehistoric Era</a></li>
+            <li><a class="dropdown-item" href="/medieval">Medieval Times</a></li>
+            <li><a class="dropdown-item" href="/theFuture">The Future</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Hero Section -->
+<div class="container d-flex justify-content-center align-items-center vh-10">
+    <h4 class="display-6 text-center" style="font-family: cursive;">Future Meets Past</h4>
+  </div>
+  
+<!-- Entry Screen -->
+<div class="entry-screen">
+  <div class="portal-container">
+    <video id="portalVideo" autoplay muted loop>
+      <source src="https://cdn.pixabay.com/video/2020/01/22/31495-387312407_tiny.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  <div class="info-box">
+    <h1>Step Inside</h1>
+    <p>Click on the portal to embark on an unforgettable journey through time</p>
+  </div>
+</div>
+
+<!-- Control Panel -->
+<div class="control-panel hidden" id="controlPanel">
+  <div class="controls">
+    <h2>Select an era to continue:</h2>
+    <button data-era="prehistoric">Prehistoric</button>
+    <button data-era="medieval">Medieval</button>
+    <button data-era="future">Future</button>
+  </div>
+  <!-- Exit Cross in Controls -->
+  <div id="exitPortalCross" class="exit-cross">&times;</div>
+</div>
+
+<!-- Video Container -->
+<div class="video-container hidden" id="videoContainer">
+  <video id="backgroundVideo" autoplay muted loop></video>
+  <div class="text-overlay" id="textOverlay"></div>
+  <div class="future-explore">
+    <p>The future is calling! Are you ready to explore?</p>
+    <button id="videoExploreButton">Explore Events</button>
+  </div>
+  <div class="video-buttons hidden" id="videoButtons">
+    <button id="goBackControls">Back to Controls</button>
+    <button id="exitPortalVideo">Back to Portal</button>
+  </div>
+</div>
+
+<!-- Stopping Machine Overlay -->
+<div class="stopping-machine-overlay">Powering down the contraption...</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JS -->
+<script src="/js/script.js"></script>
+<script>
+  document.getElementById("videoExploreButton").addEventListener("click", function() {
+    window.location.href = "/theFuture";
+  });
+</script>
+</body>
+</html>

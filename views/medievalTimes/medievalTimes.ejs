@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Meets Past | Time Travel Fest</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kavoon&family=Stalinist+One&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/prehistoricEra.css">
+
+    <ul class='slider'>
+      <li class='item' style="background-image: url('https://images.unsplash.com/photo-1680483420686-64c6f2197fa9?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
+        <div class='content'>
+          <h2 class='title'>"Lossless Youths"</h2>
+          <p class='description'> Lorem ipsum, dolor sit amet consectetur
+          adipisicing elit. Tempore fuga voluptatum, iure corporis inventore
+          praesentium nisi. Id laboriosam ipsam enim.  </p>
+          <button>Register Now!</button>
+        </div>
+      </li>
+      <li class='item' style="background-image: url('https://miro.medium.com/v2/resize:fit:1400/1*UCglAiYrEwPWS1BltVoUuw.jpeg')">
+        <div class='content'>
+          <h2 class='title'>"Estrange Bond"</h2>
+          <p class='description'> Lorem ipsum, dolor sit amet consectetur
+          adipisicing elit. Tempore fuga voluptatum, iure corporis inventore
+          praesentium nisi. Id laboriosam ipsam enim.  </p>
+          <button>Register Now!</button>
+        </div>
+      </li>
+      <li class='item' style="background-image: url('https://images.pexels.com/photos/7205915/pexels-photo-7205915.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')">
+        <div class='content'>
+          <h2 class='title'>"The Gate Keeper"</h2>
+          <p class='description'> Lorem ipsum, dolor sit amet consectetur
+          adipisicing elit. Tempore fuga voluptatum, iure corporis inventore
+          praesentium nisi. Id laboriosam ipsam enim.  </p>
+          <button>Register Now!</button>
+        </div>
+      </li>
+      <li class='item' style="background-image: url('/images/f3abfbeb-eb9f-422e-a274-3c032230c9f5.jpeg')">
+        <div class='content'>
+          <h2 class='title'>"Last Trace Of Us"</h2>
+          <p class='description'>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
+          </p>
+          <button>Register Now!</button>
+        </div>
+      </li>
+      <li class='item' style="background-image: url('https://cdn.pixabay.com/photo/2022/05/16/19/39/man-7201068_1280.jpg')">
+        <div class='content'>
+          <h2 class='title'>"Urban Decay"</h2>
+          <p class='description'>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
+          </p>
+          <button>Register Now!</button>
+        </div>
+      </li>
+      <li class='item' style="background-image: url('https://images.unsplash.com/photo-1635200487290-f91d14f64bd3?q=80&w=3044&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
+        <div class='content'>
+          <h2 class='title'>"The Migration"</h2>
+          <p class='description'> Lorem ipsum, dolor sit amet consectetur
+          adipisicing elit. Tempore fuga voluptatum, iure corporis inventore
+          praesentium nisi. Id laboriosam ipsam enim.  </p>
+          <button>Register Now!</button>
+        </div>
+      </li>
+    </ul>
+    <nav class='nav'>
+      <ion-icon class='btn prev' name="arrow-back-outline"></ion-icon>
+      <ion-icon class='btn next' name="arrow-forward-outline"></ion-icon>
+    </nav>
+
+  
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script>
+  const slider = document.querySelector('.slider');
+
+function activate(e) {
+  const items = document.querySelectorAll('.item');
+  e.target.matches('.next') && slider.append(items[0])
+  e.target.matches('.prev') && slider.prepend(items[items.length-1]);
+}
+
+document.addEventListener('click',activate,false);
+</script>
+</body>
+</html>
