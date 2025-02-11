@@ -35,6 +35,9 @@ app.get('/eventLocation', (req, res) => {
     res.render('eventLocation/eventLocation'); // This serves views/formRegistration.ejs
 });
 
+app.get('/gallery', (req, res) => {
+    res.render('gallery/gallery'); // This serves views/formRegistration.ejs
+});
 
 // Start server
 const PORT = process.env.PORT || 3000;
